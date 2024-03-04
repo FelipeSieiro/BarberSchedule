@@ -8,10 +8,10 @@ Este documento descreve os requisitos e endpoints da API para o sistema de agend
 
 ## Requisitos
 
-- [ ] Adicionar serviço
-- [ ] Excluir serviço
-- [ ] Editar perfil
-- [ ] Autenticação de usuário
+- [ ] CRUD serviço
+- [ ] CRUD perfil
+- [ ] Autenticação
+- [ ] Dashboard
 
 ## Documentação
 
