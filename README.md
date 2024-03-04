@@ -2,9 +2,6 @@
 
 API do projeto Barber Schedule - Controle de agenda para berbeiros 
 
-# Sistema de Agendamento de Barbearia
-
-Este documento descreve os requisitos e endpoints da API para o sistema de agendamento de barbearia.
 
 ## Requisitos
 
