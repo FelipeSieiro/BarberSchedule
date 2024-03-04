@@ -2,29 +2,31 @@
 
 API do projeto Barber Schedule - Controle de agenda para berbeiros 
 
+# Sistema de Agendamento de Barbearia
+
+Este documento descreve os requisitos e endpoints da API para o sistema de agendamento de barbearia.
+
 ## Requisitos
 
-- [ ] CRUD de Serviços 
-- [ ] CRUD de Movimentações
-- [ ] CRUD de Usuários
-- [ ] Autenticação
-- [ ] Dashboard
+- [ ] Adicionar serviço
+- [ ] Excluir serviço
+- [ ] Editar perfil
+- [ ] Autenticação de usuário
 
 ## Documentação
 
 ### Endpoints
 
-- [Listar Categorias](#listar-categorias)
-- [Cadastrar Categoria](#cadastrar-categoria)
-- [Detalhes da Categoria](#detalhes-da-categoria)
-- [Apagar Categoria](#apagar-categoria)
-- [Atualizar Categoria](#atualizar-categoria)
+- [Listar Serviços](#listar-serviços)
+- [Adicionar Serviço](#adicionar-serviço)
+- [Excluir Serviço](#excluir-serviço)
+- [Editar Perfil](#editar-perfil)
 
-### Listar Categorias
+## Listar Serviços
 
-`GET` /serviços
+`GET` /servicos
 
-Retorna um array com todas os serviços cadastradas.
+Retorna um array com todos os serviços cadastrados.
 
 #### Exemplo de Resposta
 
@@ -32,150 +34,125 @@ Retorna um array com todas os serviços cadastradas.
 [
     {
         "id": 1,
-        "nome": "Barba/bigode",
-        "icone": "bigode"
+        "nome": "Corte de Cabelo",
+        "icone":"tesoura"
+        "preco": 30.0
     },
     {
         "id": 2,
-        "nome": "Penteado",
-        "icone": "secador"
+        "nome": "Barba",
+        "icone":"bigode"
+        "preco": 20.0
     }
 ]
+
 ```
 
-#### Código de Status
 
-| código | descrição
-|--------|-----------
-|200|Categorias retornadas com sucesso
-|401|Usuário não autenticado. Realize autenticação em /login
+### Código de Status
 
----
+|Código	| Descrição
+|-------|--------------
+|200	| Sucesso
+|401	|Não autenticado
 
-### Cadastrar Categoria
 
-`POST` /categoria
+## Adicionar Serviço
 
-Cadastrar uma nova categoria para o usuário logado com os dados enviados no corpo da requisição.
+`POST` /servicos
 
-#### Corpo da Requisição
+Adiciona um novo serviço com os dados enviados no corpo da requisição.
 
-| campo | tipo | obrigatório | descrição
-|-------|------|:-------------:|-----------
-|nome|string|✅| Um nome curto para a categoria
-|icone| string | ❌ | O nome do ícone conforme Material Icons
+### Corpo da Requisição
+Campo | Tipo   | Obrigatório | Descrição
+------|--------|--------------|-----------------
+`nome`| String | ✅       | Nome do serviço
+`preço`|  Number | ✅      | Preço do serviço
+`icone`| img | ✅| Imagem que representa o serviço 
 
 ```js
 {
-    "nome": "Alimentação",
-    "icone": "fast-food"
+    "nome": "Penteado",
+    "icone" : "secador",
+    "preco": 40.0
 }
 ```
 
-#### Exemplo de Resposta
+### Exemplo de Resposta
+
 
 ```js
 {
-    "id": 1,
-    "nome": "Alimentação",
-    "icone": "fast-food"
+    "id": 3,
+    "nome": "Penteado",
+    "icone": "secador",
+    "preco": 40.0
 }
 ```
 
-#### Código de Status
 
-| código | descrição
-|--------|-----------
-|201|Categoria cadastrada com sucesso
-|400|Validação falhou. Verifique as regras para o corpo da requisição
-|401|Usuário não autenticado. Realize autenticação em /login
+### Código de Status
 
----
+|Código	| Descrição
+|-------|--------------
+|201	| Conteúdo criado com sucesso
+|400	| Erro na validação dos parâmetros 
+|401	| Não autenticado
 
-### Detalhes da Categoria
 
-`GET` /categoria/`{id}`
+## Excluir Serviço
+`DELETE` /servicos/{id}
 
-Retorna os dados detalhados da categoria com o `id` informado no parâmetro de path.
+Exclui o serviço com o ID especificado.
+
+### Código de Status
+
+|Código	| Descrição
+|-------|--------------
+|204	| Conteúdo excluído com sucesso
+|401	| Não autenticado
+
+
+## Editar Perfil
+`PUT` /perfil
+
+Atualiza o perfil do usuário com os dados enviados no corpo da requisição.
+
+
+### Corpo da Requisição
+
+Campo | Tipo   | Obrigatório | Descrição
+------|--------|--------------|-----------------
+`nome`|String | ✅  | Novo nome para o perfil
+`email`|String | ✅ | Novo email para o perfil
+`senha`|String |✅ | Nova senha para o perfil 
+`imagem`| img | ❌  | Imagem para o perfil
+
+```js
+
+{
+    "nome": "Novo Nome",
+    "email": "novoemail@example.com",
+    "senha": "novaSenha"
+    "imagem": "[arquivo de imagem]"
+}
+```
 
 ### Exemplo de Resposta
 ```js
-// requisição para /categoria/1
+
 {
     "id": 1,
-    "nome": "Alimentação",
-    "icone": "fast-food"
+    "nome": "Novo Nome",
+    "email": "novoemail@example.com",
+    "Senha" : "senha",
+    "imagem_url": "path imagem"
 }
 ```
 
-#### Código de Status
-
-| código | descrição
-|--------|-----------
-|200|Dados da categoria retornados com sucesso
-|401|Usuário não autenticado. Realize autenticação em /login
-|404|Não existe categoria com o `id` informado. Consulte lista em /categoria
-
----
-
-### Apagar Categoria
-
-`DELETE` /categoria/`{id}`
-
-Apaga a categoria indicada pelo `id` enviado no parâmetro de path.
-
-#### Código de Status
-
-| código | descrição
-|--------|-----------
-|204|Categoria apagada com sucesso
-|401|Usuário não autenticado. Realize autenticação em /login
-|404|Não existe categoria com o `id` informado. Consulte lista em /categoria
-
----
-
-### Atualizar Categoria
-
-`PUT` /categoria/`{id}`
-
-Atualizar os dados da categoria com o `id` informado no path, utilizando os novos dados enviados no corpo da requisição.
-
-#### Corpo da Requisição
-
-| campo | tipo | obrigatório | descrição
-|-------|------|:-------------:|-----------
-|nome|string|✅| Um nome curto para a categoria
-|icone| string | ✅ | O nome do ícone conforme Material Icons
-
-```js
-{
-    "nome": "Alimentação",
-    "icone": "fast-food"
-}
-```
-
-#### Exemplo de Resposta
-
-```js
-{
-    "id": 1,
-    "nome": "Alimentação",
-    "icone": "fast-food"
-}
-```
-
-#### Código de Status
-
-| código | descrição
-|--------|-----------
-|200|Categoria atualizada com sucesso
-|400|Validação falhou. Verifique as regras para o corpo da requisição
-|401|Usuário não autenticado. Realize autenticação em /login
-|404|Não existe categoria com o `id` informado. Consulte lista em /categoria
----
-
-
-
-
-
-
+### Código de Status
+|Código	|Descrição
+---|---
+|200	|Perfil editado com Sucesso
+|400	|Falha na validação  dos dados (campos vazios ou formato inválido)
+|401	|Não autenticado
