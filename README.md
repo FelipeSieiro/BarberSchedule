@@ -17,6 +17,7 @@ API do projeto Barber Schedule - Controle de agenda para berbeiros
 - [Listar Serviços](#listar-serviços)
 - [Adicionar Serviço](#adicionar-serviço)
 - [Excluir Serviço](#excluir-serviço)
+- [Editar Serviço](#editar-serviço)
 - [Editar Perfil](#editar-perfil)
 
 ## Listar Serviços
@@ -64,14 +65,12 @@ Adiciona um novo serviço com os dados enviados no corpo da requisição.
 Campo | Tipo   | Obrigatório | Descrição
 ------|--------|--------------|-----------------
 `nome`| String | ✅       | Nome do serviço
-`preço`|  Number | ✅      | Preço do serviço
 `icone`| img | ✅| Imagem que representa o serviço 
 
 ```js
 {
     "nome": "Penteado",
     "icone" : "secador",
-    "preco": 40.0
 }
 ```
 
@@ -83,7 +82,6 @@ Campo | Tipo   | Obrigatório | Descrição
     "id": 3,
     "nome": "Penteado",
     "icone": "secador",
-    "preco": 40.0
 }
 ```
 
@@ -108,6 +106,44 @@ Exclui o serviço com o ID especificado.
 |-------|--------------
 |204	| Conteúdo excluído com sucesso
 |401	| Não autenticado
+
+
+## Editar Serviço
+`PUT` /servicos
+
+Atualiza o serviço com os dados enviados no corpo da requisição.
+
+
+### Corpo da Requisição
+Campo | Tipo   | Obrigatório | Descrição
+------|--------|--------------|-----------------
+`nome`| String | ✅       | Nome do serviço
+`icone`| img | ✅| Imagem que representa o serviço 
+
+```js
+{
+    "nome": "Penteado",
+    "icone" : "secador",
+}
+```
+
+### Exemplo de Resposta
+
+
+```js
+{
+    "id": 3,
+    "nome": "Tintura",
+    "icone": "Pincel",
+}
+```
+
+### Código de Status
+|Código	|Descrição
+---|---
+|200	|Serviço editado com Sucesso
+|400	|Falha na validação  dos dados (campos vazios ou formato inválido)
+|401	|Não autenticado
 
 
 ## Editar Perfil
