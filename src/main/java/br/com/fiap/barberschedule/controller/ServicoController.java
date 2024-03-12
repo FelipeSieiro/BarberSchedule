@@ -22,20 +22,21 @@ public class ServicoController {
 
       Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired // envia mudanças para o banco de dados automaticamente
+    @Autowired 
     ServicoRepository repository;
 
     @GetMapping
     public List<Servico> index() {
-        return repository.findAll() ; //retorna lista de categoria do banco de dados
-
+        return repository.findAll() ; 
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Servico create(@RequestBody Servico servico) { // binding
+    public Servico create(@RequestBody Servico servico) { 
         log.info("cadastrando servico {} ", servico);
         repository.save(servico);
         return servico;
     }
 }
+
+     
