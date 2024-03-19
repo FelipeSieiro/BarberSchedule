@@ -44,6 +44,46 @@ public class ServicoController {
         return servico;
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<Servico> show(@PathVariable Long id) {
+        log.info("buscando serviço por id {}", id);
+
+        return repository
+            .findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+    
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> destroy(@PathVariable Long id) {
+        log.info("apagando serviço");
+
+        verificarSeExisteServico(id);
+        
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+
+    }
+    @PutMapping("{id}")
+    public ResponseEntity<Servico> update(@PathVariable Long id, @RequestBody Servico servico){
+        log.info("atualizando Servico com id {} para {}", id, servico);
+        
+        verificarSeExisteServico(id);
+                        
+        servico.setId(id);
+        repository.save(servico);
+        return ResponseEntity.ok(servico);
+    }
+
+
+    private void verificarSeExisteServico(Long id) {
+        repository
+            .findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Não existe categoria com o `id` informado. Consulte lista em /categoria"
+            ));
+    }
 }
 
      
