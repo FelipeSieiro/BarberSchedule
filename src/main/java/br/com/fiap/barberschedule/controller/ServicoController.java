@@ -1,5 +1,8 @@
 package br.com.fiap.barberschedule.controller;
 
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,69 +24,62 @@ import br.com.fiap.barberschedule.repository.ServicoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 
+
 @RestController
 @RequestMapping("servico")
 @Slf4j
 @SuppressWarnings("null")
 public class ServicoController {
 
-    @Autowired 
+    @Autowired
     ServicoRepository repository;
-    
 
     @GetMapping
     public List<Servico> index() {
-        return repository.findAll() ; 
+        return repository.findAll();
     }
 
     @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     public Servico create(@RequestBody Servico servico) { 
         log.info("cadastrando servico {} ", servico);
-        repository.save(servico);
-        return servico;
+        return repository.save(servico);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Servico> show(@PathVariable Long id) {
-        log.info("buscando serviço por id {}", id);
+        log.info("buscando servico por id {}", id);
 
         return repository
-            .findById(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+                .findById(id)
+                .map(ResponseEntity::ok) 
+                .orElse(ResponseEntity.notFound().build());
     }
-    
+
     @DeleteMapping("{id}")
-    public ResponseEntity<Object> destroy(@PathVariable Long id) {
-        log.info("apagando serviço");
+    @ResponseStatus(NO_CONTENT)
+    public void destroy(@PathVariable Long id) {
+        log.info("apagando servico");
 
         verificarSeExisteServico(id);
-        
         repository.deleteById(id);
-        return ResponseEntity.noContent().build();
-
     }
+
     @PutMapping("{id}")
-    public ResponseEntity<Servico> update(@PathVariable Long id, @RequestBody Servico servico){
-        log.info("atualizando Servico com id {} para {}", id, servico);
-        
-        verificarSeExisteServico(id);
-                        
-        servico.setId(id);
-        repository.save(servico);
-        return ResponseEntity.ok(servico);
-    }
+    public Servico update(@PathVariable Long id, @RequestBody Servico servico) {
+        log.info("atualizando servico com id {} para {}", id, servico);
 
+        verificarSeExisteServico(id);
+        servico.setId(id);
+        return repository.save(servico);
+    }
 
     private void verificarSeExisteServico(Long id) {
         repository
-            .findById(id)
-            .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Não existe categoria com o `id` informado. Consulte lista em /categoria"
-            ));
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Não existe servico com o id informado. Consulte lista em /servico"));
     }
-}
 
-     
+}
