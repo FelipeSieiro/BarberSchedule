@@ -5,11 +5,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Perfil {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -20,11 +25,13 @@ public class Perfil {
     @NotBlank(message = "{perfil.email.notblank}")
     private String email;
 
-    @NotBlank(message = "{perfil.senha.notblank}")
-    @Size(min = 6, max = 255, message = "{perfil.senha.size}")
-    private String senha;
+    
+
+    // // @NotBlank(message = "{perfil.senha.notblank}")
+    // // @Size(min = 6, max = 255, message = "{perfil.senha.size}")
+    // // private String senha;
 
 
-    private String imagem;
+    // private String imagem;
 }
 

@@ -4,8 +4,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.List;
-
-import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +32,7 @@ public class ServicoController {
     @Autowired
     ServicoRepository repository;
 
-    @Autowired
-    OpenAiChatClient gpt;
+
 
     @GetMapping
     public List<Servico> index() {
@@ -46,9 +43,6 @@ public class ServicoController {
     @ResponseStatus(CREATED)
     public Servico create(@RequestBody @Valid Servico servico) { // binding
         log.info("cadastrando servico {} ", servico);
-        var icone = gpt.call("Sugira um icone do Material Icons para uma servico chamada " + servico.getNome()
-                + ". Retorne apenas o nome do ícone");
-        servico.setIcone(icone);
         return repository.save(servico);
     }
 

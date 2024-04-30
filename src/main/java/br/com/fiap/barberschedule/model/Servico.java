@@ -4,11 +4,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Servico {
     
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,5 +24,8 @@ public class Servico {
     @NotBlank(message = "{categoria.nome.notblank}")
     private String nome;
     
-    private String icone = "request_quote";
+    private String icone;
+
+    @ManyToOne
+    private Perfil perfil;
 }
