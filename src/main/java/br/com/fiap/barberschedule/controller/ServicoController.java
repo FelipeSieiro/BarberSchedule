@@ -34,9 +34,15 @@ public class ServicoController {
 
 
 
-    @GetMapping
-    public List<Servico> index() {
-        return repository.findAll();
+     @GetMapping
+    public Page<Servico> index(
+            @RequestParam(required = false) String servico,
+    ) 
+        if (categoria != null) {
+            return repository.findByServicoNome(servico, pageable);
+        }
+
+        return repository.findAll(pageable);
     }
 
     @PostMapping
