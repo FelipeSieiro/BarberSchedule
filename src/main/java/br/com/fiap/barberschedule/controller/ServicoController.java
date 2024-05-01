@@ -5,6 +5,9 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,8 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("servico")
+@CacheConfig(cacheNames = "servicos")
 @Slf4j
-@SuppressWarnings("null")
 public class ServicoController {
 
     @Autowired
@@ -34,44 +37,42 @@ public class ServicoController {
 
 
 
-     @GetMapping
-    public Page<Servico> index(
-            @RequestParam(required = false) String servico,
-    ) 
-        if (categoria != null) {
-            return repository.findByServicoNome(servico, pageable);
-        }
-
-        return repository.findAll(pageable);
+    @GetMapping
+    @Cacheable
+    public List<Servico> index() {
+        return repository.findAll();
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
+    @CacheEvict(allEntries = true)
     public Servico create(@RequestBody @Valid Servico servico) { // binding
         log.info("cadastrando servico {} ", servico);
         return repository.save(servico);
     }
-
+    
     @GetMapping("{id}")
     public ResponseEntity<Servico> show(@PathVariable Long id) {
         log.info("buscando servico por id {}", id);
-
+        
         return repository
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        .findById(id)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
     }
-
+    
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
+    @CacheEvict(allEntries = true)
     public void destroy(@PathVariable Long id) {
         log.info("apagando servico");
-
+        
         verificarSeExisteServico(id);
         repository.deleteById(id);
     }
-
+    
     @PutMapping("{id}")
+    @CacheEvict(allEntries = true)
     public Servico update(@PathVariable Long id, @RequestBody Servico servico) {
         log.info("atualizando servico com id {} para {}", id, servico);
 

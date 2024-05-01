@@ -1,4 +1,8 @@
-c:\Users\logonrmlocal\Desktop\BarberSchedule-1\src\main\java\br\com\fiap\barberschedule\model\Servico.java
-c:\Users\logonrmlocal\Desktop\BarberSchedule-1\src\main\java\br\com\fiap\barberschedule\BarberscheduleApplication.java
-c:\Users\logonrmlocal\Desktop\BarberSchedule-1\src\main\java\br\com\fiap\barberschedule\repository\ServicoRepository.java
-c:\Users\logonrmlocal\Desktop\BarberSchedule-1\src\main\java\br\com\fiap\barberschedule\controller\ServicoController.java
+c:\Users\logonrmlocal\Desktop\BarberSchedule\src\main\java\br\com\fiap\barberschedule\model\Servico.java
+c:\Users\logonrmlocal\Desktop\BarberSchedule\src\main\java\br\com\fiap\barberschedule\repository\ServicoRepository.java
+c:\Users\logonrmlocal\Desktop\BarberSchedule\src\main\java\br\com\fiap\barberschedule\config\DatabaseSeeder.java
+c:\Users\logonrmlocal\Desktop\BarberSchedule\src\main\java\br\com\fiap\barberschedule\controller\ServicoController.java
+c:\Users\logonrmlocal\Desktop\BarberSchedule\src\main\java\br\com\fiap\barberschedule\BarberscheduleApplication.java
+c:\Users\logonrmlocal\Desktop\BarberSchedule\src\main\java\br\com\fiap\barberschedule\model\Perfil.java
+c:\Users\logonrmlocal\Desktop\BarberSchedule\src\main\java\br\com\fiap\barberschedule\controller\PerfilController.java
+c:\Users\logonrmlocal\Desktop\BarberSchedule\src\main\java\br\com\fiap\barberschedule\repository\PerfilRepository.java
